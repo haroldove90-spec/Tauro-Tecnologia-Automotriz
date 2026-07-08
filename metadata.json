@@ -1,5 +1,5 @@
 {
-  "name": "Dashboard Taller Mecánico",
+  "name": "Tauro Tecnología",
   "description": "Un sistema integral de gestión para talleres mecánicos que conecta en tiempo real a Asesores, Mecánicos, Administradores y Clientes con flujo de evidencias fotográficas, firmas digitales y cálculo de verificación de la CDMX.",
   "requestFramePermissions": ["camera"],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]

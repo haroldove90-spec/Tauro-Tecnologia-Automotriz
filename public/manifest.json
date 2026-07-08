@@ -1,0 +1,22 @@
+{
+  "name": "Tauro Tecnología",
+  "short_name": "Tauro",
+  "description": "Sistema de gestión de talleres mecánicos y seguimiento en tiempo real.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0f172a",
+  "theme_color": "#e11d48",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "https://appdesignproyectos.com//tauroicono.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "https://appdesignproyectos.com//tauroicono.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

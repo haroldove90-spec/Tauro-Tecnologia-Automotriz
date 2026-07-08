@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { 
   Wrench, Shield, Users, CreditCard, ChevronRight, Menu, X, 
-  Bell, HelpCircle, CheckCircle, Smartphone, Award, ClipboardCheck 
+  Bell, HelpCircle, CheckCircle, Smartphone, Award, ClipboardCheck, Camera 
 } from 'lucide-react';
 import { ServiceOrder, PartInventory, User } from './types';
 import { INITIAL_ORDERS, INITIAL_INVENTORY, INITIAL_USERS } from './data/mockData';
@@ -41,6 +41,69 @@ export default function App() {
     '👍 Diana Laura Castillo autorizó el presupuesto completo para OS-1004.'
   ]);
   const [showNotificationDropdown, setShowNotificationDropdown] = useState(false);
+  const [deferredPrompt, setDeferredPrompt] = useState<any>(null);
+  const [cameraPermission, setCameraPermission] = useState<'prompt' | 'granted' | 'denied'>('prompt');
+  const [showOnboarding, setShowOnboarding] = useState<boolean>(() => {
+    const local = localStorage.getItem('tauro_onboarding_dismissed');
+    return local !== 'true';
+  });
+
+  // Track if onboarding gets dismissed
+  const handleDismissOnboarding = () => {
+    localStorage.setItem('tauro_onboarding_dismissed', 'true');
+    setShowOnboarding(false);
+  };
+
+  // Listen to installation prompts and check camera permission
+  useEffect(() => {
+    const handleBeforeInstallPrompt = (e: Event) => {
+      e.preventDefault();
+      setDeferredPrompt(e);
+      triggerToast('📲 ¡Tauro Tecnología está lista para instalarse en tu dispositivo!');
+    };
+
+    window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
+
+    // Check camera permission
+    if (navigator.permissions && navigator.permissions.query) {
+      navigator.permissions.query({ name: 'camera' as any }).then((permissionStatus) => {
+        setCameraPermission(permissionStatus.state);
+        permissionStatus.onchange = () => {
+          setCameraPermission(permissionStatus.state);
+        };
+      }).catch(() => {});
+    }
+
+    return () => {
+      window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
+    };
+  }, []);
+
+  const handleInstallApp = async () => {
+    if (!deferredPrompt) {
+      triggerToast('ℹ️ Para instalar en iOS, abre el menú de compartir de Safari y selecciona "Agregar a Inicio". En Android o Chrome, si no aparece el aviso, tu navegador ya lo tiene instalado o puedes forzarlo desde el menú del navegador.');
+      return;
+    }
+    deferredPrompt.prompt();
+    const { outcome } = await deferredPrompt.userChoice;
+    if (outcome === 'accepted') {
+      triggerToast('🎉 ¡Gracias por instalar la App de Tauro Tecnología!');
+    }
+    setDeferredPrompt(null);
+  };
+
+  const handleRequestCameraPermission = async () => {
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+      // Stop tracks immediately to avoid keeping the camera active in background
+      stream.getTracks().forEach(track => track.stop());
+      setCameraPermission('granted');
+      triggerToast('📸 Permiso de cámara concedido con éxito. ¡Ya puedes capturar evidencias!');
+    } catch (error) {
+      setCameraPermission('denied');
+      triggerToast('❌ No se pudo activar la cámara. Revisa la configuración de privacidad de tu dispositivo.');
+    }
+  };
 
   // Write state to localStorage on any modification
   useEffect(() => {
@@ -92,7 +155,7 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-100 flex font-sans text-slate-800 antialiased overflow-x-hidden">
+    <div className="min-h-screen bg-slate-100 flex font-sans text-slate-800 antialiased overflow-x-hidden pb-16 lg:pb-0">
       
       {/* Toast Alert pop-up */}
       {toastMessage && (
@@ -114,12 +177,17 @@ export default function App() {
           {/* Logo Brand Header */}
           <div className="p-6 border-b border-slate-900 flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 bg-rose-600 rounded-xl flex items-center justify-center text-white shadow-lg shadow-rose-900/30">
-                <Wrench className="w-5 h-5 stroke-[2.5]" />
+              <div className="w-10 h-10 bg-slate-900 rounded-xl flex items-center justify-center border border-slate-800 shadow-lg overflow-hidden shrink-0">
+                <img 
+                  src="https://appdesignproyectos.com//taurologo.png" 
+                  alt="Tauro Logo" 
+                  className="w-full h-full object-contain" 
+                  referrerPolicy="no-referrer" 
+                />
               </div>
               <div>
-                <h1 className="text-sm font-black text-white tracking-wide uppercase leading-none">MOTO-CONTROL</h1>
-                <span className="text-[9px] font-black tracking-widest text-rose-500 block mt-1">SISTEMA DE TALLER</span>
+                <h1 className="text-xs font-black text-white tracking-wide uppercase leading-none">TAURO</h1>
+                <span className="text-[9px] font-black tracking-widest text-rose-500 block mt-1">TECNOLOGÍA</span>
               </div>
             </div>
             
@@ -243,9 +311,9 @@ export default function App() {
       <div className="flex-1 flex flex-col min-h-screen">
         
         {/* Dynamic Top bar header mimicking the screenshot layout */}
-        <header className="bg-white border-b border-slate-200/80 px-6 py-4 flex items-center justify-between">
+        <header className="bg-white border-b border-slate-200/80 px-4 md:px-6 py-3.5 flex items-center justify-between">
           
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2 md:gap-3">
             <button 
               onClick={() => setSidebarOpen(true)}
               className="lg:hidden p-2 text-slate-600 hover:text-slate-900 hover:bg-slate-100 rounded-lg cursor-pointer"
@@ -253,23 +321,60 @@ export default function App() {
               <Menu className="w-5 h-5" />
             </button>
             
-            <div className="flex flex-col">
-              <span className="text-[9px] font-black uppercase text-rose-500 tracking-wider">PANEL ACTIVO</span>
-              <h2 className="text-sm font-black text-slate-800 tracking-tight flex items-center gap-1.5 mt-0.5">
-                {activeRole === 'Admin' && '👑 ADMINISTRADOR GENERAL'}
-                {activeRole === 'Asesor' && '👔 ASESOR DE SERVICIO / RECEPCIÓN'}
-                {activeRole === 'Mecánico' && '🔧 TÉCNICO MECÁNICO / DIAGNÓSTICOS'}
-                {activeRole === 'Cliente' && '📱 PORTAL DIGITAL DEL CLIENTE'}
-              </h2>
+            <div className="flex items-center gap-2">
+              <div className="w-8 h-8 rounded bg-slate-50 border border-slate-200 flex items-center justify-center overflow-hidden shrink-0">
+                <img 
+                  src="https://appdesignproyectos.com//taurologo.png" 
+                  alt="Tauro Logo" 
+                  className="w-full h-full object-contain" 
+                  referrerPolicy="no-referrer" 
+                />
+              </div>
+              <div className="flex flex-col">
+                <span className="text-[9px] font-black uppercase text-rose-500 tracking-wider">Tauro Tecnología</span>
+                <h2 className="text-xs md:text-sm font-black text-slate-800 tracking-tight flex items-center gap-1.5 mt-0.5">
+                  {activeRole === 'Admin' && '👑 ADMINISTRADOR'}
+                  {activeRole === 'Asesor' && '👔 ASESOR'}
+                  {activeRole === 'Mecánico' && '🔧 TÉCNICO'}
+                  {activeRole === 'Cliente' && '📱 CLIENTE'}
+                </h2>
+              </div>
             </div>
           </div>
 
           {/* Header Action Tools */}
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-2 md:gap-4">
             
+            {/* Camera Permission Quick Trigger */}
+            <button
+              onClick={handleRequestCameraPermission}
+              className={`hidden md:flex items-center gap-1.5 text-[10px] font-black px-2.5 py-1.5 rounded-full uppercase transition-all cursor-pointer ${
+                cameraPermission === 'granted'
+                  ? 'bg-emerald-50 text-emerald-700 border border-emerald-200'
+                  : cameraPermission === 'denied'
+                    ? 'bg-rose-50 text-rose-700 border border-rose-200'
+                    : 'bg-amber-50 hover:bg-amber-100 text-amber-700 border border-amber-200'
+              }`}
+              title="Solicitar Permisos de Cámara del Móvil"
+            >
+              <Camera className={`w-3.5 h-3.5 ${cameraPermission === 'granted' ? 'text-emerald-500' : 'text-amber-500 animate-pulse'}`} />
+              <span>Cámara: {cameraPermission === 'granted' ? 'Permitida' : 'Activar'}</span>
+            </button>
+
+            {/* PWA Mobile Installation Button */}
+            <button
+              onClick={handleInstallApp}
+              className="flex items-center gap-1 bg-rose-600 hover:bg-rose-700 text-white text-[10px] font-extrabold px-2.5 py-1.5 rounded-full uppercase transition-all shadow-md shadow-rose-950/20 cursor-pointer"
+              title="Instalar Aplicación Móvil"
+            >
+              <Smartphone className="w-3.5 h-3.5" />
+              <span className="hidden sm:inline">Instalar App</span>
+              <span className="sm:hidden">Instalar</span>
+            </button>
+
             {/* Help guidelines badge */}
-            <span className="hidden md:flex items-center gap-1 text-[10px] font-extrabold text-slate-400 bg-slate-100 px-2.5 py-1 rounded-full uppercase">
-              <Award className="w-3.5 h-3.5 text-rose-500" /> CDMX Verificación Sincronizada
+            <span className="hidden xl:flex items-center gap-1 text-[10px] font-extrabold text-slate-400 bg-slate-100 px-2.5 py-1.5 rounded-full uppercase">
+              <Award className="w-3.5 h-3.5 text-rose-500" /> CDMX Sincronizada
             </span>
 
             {/* Notification drop */}
@@ -339,7 +444,76 @@ export default function App() {
         </header>
 
         {/* Main interactive viewport container */}
-        <main className="p-6 flex-1 max-w-[1600px] w-full mx-auto">
+        <main className="p-4 md:p-6 flex-1 max-w-[1600px] w-full mx-auto">
+          
+          {/* Tauro PWA & Camera Onboarding Banner */}
+          {showOnboarding && (
+            <div className="mb-6 bg-slate-950 border border-slate-900 rounded-2xl p-5 text-white relative overflow-hidden shadow-xl">
+              {/* Decorative background gradients */}
+              <div className="absolute right-0 bottom-0 top-0 w-1/3 bg-gradient-to-l from-rose-500/10 to-transparent pointer-events-none" />
+              
+              <button 
+                onClick={handleDismissOnboarding}
+                className="absolute top-4 right-4 p-1.5 text-slate-400 hover:text-white rounded-lg transition-colors cursor-pointer bg-slate-900/60"
+                title="Cerrar Onboarding"
+              >
+                <X className="w-4 h-4" />
+              </button>
+
+              <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6 relative z-10">
+                <div className="flex items-start gap-4">
+                  <div className="w-12 h-12 rounded-2xl bg-rose-600/15 border border-rose-500/30 flex items-center justify-center text-rose-500 shrink-0">
+                    <Smartphone className="w-6 h-6" />
+                  </div>
+                  <div>
+                    <h3 className="text-sm font-black tracking-wider uppercase text-white flex items-center gap-2 flex-wrap">
+                      ¡Instala la App de Tauro Tecnología! 
+                      <span className="bg-rose-500/20 text-rose-400 font-bold px-2 py-0.5 rounded text-[9px] uppercase tracking-normal">Instalación PWA</span>
+                    </h3>
+                    <p className="text-xs text-slate-300 mt-1 max-w-2xl leading-relaxed font-medium">
+                      Descarga nuestra aplicación móvil oficial para recibir notificaciones en tiempo real, ver la verificación de la CDMX, firmar autorizaciones digitales y capturar evidencias fotográficas directamente desde el taller.
+                    </p>
+                    <div className="flex flex-wrap gap-x-4 gap-y-1.5 mt-3 text-[11px] font-bold text-slate-400">
+                      <span className="flex items-center gap-1 text-emerald-400">
+                        ✓ Icono oficial "Tauro"
+                      </span>
+                      <span className="flex items-center gap-1 text-emerald-400">
+                        ✓ Acceso instantáneo
+                      </span>
+                      <span className="flex items-center gap-1 text-emerald-400">
+                        ✓ Activación de cámara móvil
+                      </span>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="flex flex-col sm:flex-row gap-2.5 shrink-0 w-full lg:w-auto">
+                  <button
+                    onClick={handleRequestCameraPermission}
+                    className={`px-4 py-2.5 rounded-xl font-bold text-xs transition-all flex items-center justify-center gap-2 border cursor-pointer ${
+                      cameraPermission === 'granted'
+                        ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20'
+                        : 'bg-slate-900 hover:bg-slate-850 text-slate-200 border-slate-800'
+                    }`}
+                  >
+                    <Camera className="w-4 h-4" />
+                    <span>
+                      {cameraPermission === 'granted' ? 'Cámara Activada' : 'Permitir Cámara'}
+                    </span>
+                  </button>
+
+                  <button
+                    onClick={handleInstallApp}
+                    className="px-5 py-2.5 bg-rose-600 hover:bg-rose-700 text-white font-extrabold text-xs rounded-xl shadow-lg shadow-rose-950/40 transition-all flex items-center justify-center gap-2 cursor-pointer border border-rose-500"
+                  >
+                    <Smartphone className="w-4 h-4" />
+                    <span>Instalar Aplicación</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
+
           {activeRole === 'Asesor' && (
             <AsesorView 
               orders={orders} 
@@ -378,6 +552,46 @@ export default function App() {
           )}
         </main>
       </div>
+
+      {/* Bottom Navigation Bar for Mobile & Tablet */}
+      <nav className="lg:hidden fixed bottom-0 inset-x-0 bg-slate-950 border-t border-slate-900 text-slate-400 z-40 h-16 flex items-center justify-around px-2 shadow-2xl">
+        <button
+          onClick={() => setActiveRole('Admin')}
+          className={`flex flex-col items-center justify-center flex-1 h-full py-1.5 transition-all cursor-pointer ${
+            activeRole === 'Admin' ? 'text-rose-500 font-extrabold' : 'hover:text-slate-200'
+          }`}
+        >
+          <Award className={`w-5 h-5 ${activeRole === 'Admin' ? 'scale-110 text-rose-500' : ''}`} />
+          <span className="text-[10px] mt-1 font-bold">Admin</span>
+        </button>
+        <button
+          onClick={() => setActiveRole('Asesor')}
+          className={`flex flex-col items-center justify-center flex-1 h-full py-1.5 transition-all cursor-pointer ${
+            activeRole === 'Asesor' ? 'text-rose-500 font-extrabold' : 'hover:text-slate-200'
+          }`}
+        >
+          <ClipboardCheck className={`w-5 h-5 ${activeRole === 'Asesor' ? 'scale-110 text-rose-500' : ''}`} />
+          <span className="text-[10px] mt-1 font-bold">Asesor</span>
+        </button>
+        <button
+          onClick={() => setActiveRole('Mecánico')}
+          className={`flex flex-col items-center justify-center flex-1 h-full py-1.5 transition-all cursor-pointer ${
+            activeRole === 'Mecánico' ? 'text-rose-500 font-extrabold' : 'hover:text-slate-200'
+          }`}
+        >
+          <Wrench className={`w-5 h-5 ${activeRole === 'Mecánico' ? 'scale-110 text-rose-500' : ''}`} />
+          <span className="text-[10px] mt-1 font-bold">Mecánico</span>
+        </button>
+        <button
+          onClick={() => setActiveRole('Cliente')}
+          className={`flex flex-col items-center justify-center flex-1 h-full py-1.5 transition-all cursor-pointer ${
+            activeRole === 'Cliente' ? 'text-rose-500 font-extrabold' : 'hover:text-slate-200'
+          }`}
+        >
+          <Smartphone className={`w-5 h-5 ${activeRole === 'Cliente' ? 'scale-110 text-rose-500' : ''}`} />
+          <span className="text-[10px] mt-1 font-bold">Cliente</span>
+        </button>
+      </nav>
 
     </div>
   );
