@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { 
   Wrench, Shield, Users, CreditCard, ChevronRight, Menu, X, 
-  Bell, HelpCircle, CheckCircle, Smartphone, Award, ClipboardCheck, Camera 
+  Bell, HelpCircle, CheckCircle, Smartphone, Award, ClipboardCheck, Camera, Home 
 } from 'lucide-react';
 import { ServiceOrder, PartInventory, User } from './types';
 import { INITIAL_ORDERS, INITIAL_INVENTORY, INITIAL_USERS } from './data/mockData';
@@ -27,9 +27,9 @@ export default function App() {
     return local ? JSON.parse(local) : INITIAL_USERS;
   });
 
-  const [activeRole, setActiveRole] = useState<'Asesor' | 'Mecánico' | 'Admin' | 'Cliente'>(() => {
+  const [activeRole, setActiveRole] = useState<'Home' | 'Asesor' | 'Mecánico' | 'Admin' | 'Cliente'>(() => {
     const local = localStorage.getItem('taller_active_role');
-    return (local as any) || 'Admin'; // Default to Admin dashboard as it has the main gorgeous charts!
+    return (local as any) || 'Home'; // Default to Home screen!
   });
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -211,6 +211,23 @@ export default function App() {
               <div className="flex flex-col gap-1">
                 <button
                   onClick={() => {
+                    setActiveRole('Home');
+                    setSidebarOpen(false);
+                  }}
+                  className={`w-full text-left py-3 px-4 rounded-xl text-xs font-bold transition-all flex items-center justify-between cursor-pointer ${
+                    activeRole === 'Home'
+                      ? 'bg-rose-600 text-white font-extrabold shadow-lg shadow-rose-950/40'
+                      : 'hover:bg-slate-900 text-slate-400 hover:text-white'
+                  }`}
+                >
+                  <span className="flex items-center gap-2.5">
+                    🏠 Inicio / Menú Principal
+                  </span>
+                  <ChevronRight className="w-4 h-4 opacity-50" />
+                </button>
+
+                <button
+                  onClick={() => {
                     setActiveRole('Admin');
                     setSidebarOpen(false);
                   }}
@@ -333,6 +350,7 @@ export default function App() {
               <div className="flex flex-col">
                 <span className="text-[9px] font-black uppercase text-rose-500 tracking-wider">Tauro Tecnología</span>
                 <h2 className="text-xs md:text-sm font-black text-slate-800 tracking-tight flex items-center gap-1.5 mt-0.5">
+                  {activeRole === 'Home' && '🏠 INICIO'}
                   {activeRole === 'Admin' && '👑 ADMINISTRADOR'}
                   {activeRole === 'Asesor' && '👔 ASESOR'}
                   {activeRole === 'Mecánico' && '🔧 TÉCNICO'}
@@ -344,6 +362,18 @@ export default function App() {
 
           {/* Header Action Tools */}
           <div className="flex items-center gap-2 md:gap-4">
+            
+            {/* Go to Home Button */}
+            {activeRole !== 'Home' && (
+              <button
+                onClick={() => setActiveRole('Home')}
+                className="flex items-center gap-1.5 bg-slate-50 hover:bg-slate-100 text-slate-700 text-[10px] font-black px-2.5 py-1.5 rounded-full border border-slate-200 uppercase transition-all cursor-pointer"
+                title="Volver al Menú de Inicio"
+              >
+                <Home className="w-3.5 h-3.5 text-rose-600" />
+                <span className="hidden sm:inline">Inicio</span>
+              </button>
+            )}
             
             {/* Camera Permission Quick Trigger */}
             <button
@@ -416,9 +446,10 @@ export default function App() {
               )}
             </div>
 
-            {/* Simulated User Profile Icon */}
+             {/* Simulated User Profile Icon */}
             <div className="flex items-center gap-2 border-l border-slate-200 pl-4">
               <div className="w-8 h-8 rounded-full bg-slate-800 text-white flex items-center justify-center font-bold text-xs">
+                {activeRole === 'Home' && 'TT'}
                 {activeRole === 'Admin' && 'AD'}
                 {activeRole === 'Asesor' && 'AS'}
                 {activeRole === 'Mecánico' && 'ME'}
@@ -426,12 +457,14 @@ export default function App() {
               </div>
               <div className="hidden sm:flex flex-col">
                 <span className="text-xs font-bold text-slate-800 leading-tight">
+                  {activeRole === 'Home' && 'Tauro Tecnología'}
                   {activeRole === 'Admin' && 'Ing. Carlos Ortiz'}
                   {activeRole === 'Asesor' && 'Asesor Alejandro'}
                   {activeRole === 'Mecánico' && 'Mec. Roberto Gómez'}
                   {activeRole === 'Cliente' && 'María Fernanda R.'}
                 </span>
                 <span className="text-[9px] text-slate-400 font-bold uppercase tracking-wider">
+                  {activeRole === 'Home' && 'Menú Principal'}
                   {activeRole === 'Admin' && 'Súper Admin'}
                   {activeRole === 'Asesor' && 'Asesor Rampa'}
                   {activeRole === 'Mecánico' && 'Bahía 3'}
@@ -514,6 +547,101 @@ export default function App() {
             </div>
           )}
 
+          {activeRole === 'Home' && (
+            <div className="flex flex-col items-center justify-center min-h-[60vh] py-6 md:py-12 px-2 md:px-4">
+              <div className="bg-white border border-slate-200/80 shadow-2xl rounded-3xl p-6 md:p-12 max-w-4xl w-full text-center flex flex-col items-center gap-6 md:gap-8 relative overflow-hidden">
+                {/* Accent design top bar */}
+                <div className="absolute top-0 inset-x-0 h-1.5 bg-rose-600" />
+                
+                {/* Brand & Logo Section */}
+                <div className="flex flex-col items-center gap-4">
+                  <div className="w-24 h-24 md:w-32 md:h-32 bg-slate-950 rounded-2xl p-4 flex items-center justify-center border border-slate-900 shadow-xl overflow-hidden animate-pulse">
+                    <img 
+                      src="https://appdesignproyectos.com//taurologo.png" 
+                      alt="Tauro Logo" 
+                      className="w-full h-full object-contain" 
+                      referrerPolicy="no-referrer" 
+                    />
+                  </div>
+                  <div className="mt-2">
+                    <h1 className="text-xl md:text-2xl font-black text-slate-900 tracking-tight uppercase">
+                      Tauro Tecnología
+                    </h1>
+                    <span className="text-[10px] md:text-xs font-black tracking-widest text-rose-600 uppercase block mt-1">
+                      Sistema Integral para Talleres Mecánicos
+                    </span>
+                  </div>
+                </div>
+
+                <div className="w-full h-[1px] bg-slate-100" />
+
+                {/* The 4 Roles - Icons & Titles ONLY, no descriptions */}
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-4 w-full">
+                  
+                  {/* Administrador */}
+                  <button
+                    onClick={() => setActiveRole('Admin')}
+                    className="flex flex-col items-center justify-center p-5 bg-slate-50 hover:bg-rose-50 hover:text-rose-600 border border-slate-200 hover:border-rose-300 rounded-2xl transition-all cursor-pointer group shadow-sm hover:shadow-md"
+                  >
+                    <div className="w-12 h-12 bg-slate-950 group-hover:bg-rose-600 text-rose-500 group-hover:text-white rounded-xl flex items-center justify-center mb-3 shadow transition-all duration-300">
+                      <Award className="w-6 h-6" />
+                    </div>
+                    <span className="text-xs font-black tracking-wide uppercase text-slate-800 group-hover:text-rose-600">
+                      Administrador
+                    </span>
+                  </button>
+
+                  {/* Asesor */}
+                  <button
+                    onClick={() => setActiveRole('Asesor')}
+                    className="flex flex-col items-center justify-center p-5 bg-slate-50 hover:bg-rose-50 hover:text-rose-600 border border-slate-200 hover:border-rose-300 rounded-2xl transition-all cursor-pointer group shadow-sm hover:shadow-md"
+                  >
+                    <div className="w-12 h-12 bg-slate-950 group-hover:bg-rose-600 text-rose-500 group-hover:text-white rounded-xl flex items-center justify-center mb-3 shadow transition-all duration-300">
+                      <ClipboardCheck className="w-6 h-6" />
+                    </div>
+                    <span className="text-xs font-black tracking-wide uppercase text-slate-800 group-hover:text-rose-600">
+                      Asesor
+                    </span>
+                  </button>
+
+                  {/* Mecánico */}
+                  <button
+                    onClick={() => setActiveRole('Mecánico')}
+                    className="flex flex-col items-center justify-center p-5 bg-slate-50 hover:bg-rose-50 hover:text-rose-600 border border-slate-200 hover:border-rose-300 rounded-2xl transition-all cursor-pointer group shadow-sm hover:shadow-md"
+                  >
+                    <div className="w-12 h-12 bg-slate-950 group-hover:bg-rose-600 text-rose-500 group-hover:text-white rounded-xl flex items-center justify-center mb-3 shadow transition-all duration-300">
+                      <Wrench className="w-6 h-6" />
+                    </div>
+                    <span className="text-xs font-black tracking-wide uppercase text-slate-800 group-hover:text-rose-600">
+                      Mecánico
+                    </span>
+                  </button>
+
+                  {/* Cliente */}
+                  <button
+                    onClick={() => setActiveRole('Cliente')}
+                    className="flex flex-col items-center justify-center p-5 bg-slate-50 hover:bg-rose-50 hover:text-rose-600 border border-slate-200 hover:border-rose-300 rounded-2xl transition-all cursor-pointer group shadow-sm hover:shadow-md"
+                  >
+                    <div className="w-12 h-12 bg-slate-950 group-hover:bg-rose-600 text-rose-500 group-hover:text-white rounded-xl flex items-center justify-center mb-3 shadow transition-all duration-300">
+                      <Smartphone className="w-6 h-6" />
+                    </div>
+                    <span className="text-xs font-black tracking-wide uppercase text-slate-800 group-hover:text-rose-600">
+                      Cliente
+                    </span>
+                  </button>
+
+                </div>
+
+                {/* Sub-note on synchronized real-time nature */}
+                <div className="mt-2 text-[10px] text-slate-400 font-bold uppercase tracking-wider flex items-center gap-1.5">
+                  <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+                  Sincronización de Evidencias en Tiempo Real Activa
+                </div>
+
+              </div>
+            </div>
+          )}
+
           {activeRole === 'Asesor' && (
             <AsesorView 
               orders={orders} 
@@ -554,7 +682,16 @@ export default function App() {
       </div>
 
       {/* Bottom Navigation Bar for Mobile & Tablet */}
-      <nav className="lg:hidden fixed bottom-0 inset-x-0 bg-slate-950 border-t border-slate-900 text-slate-400 z-40 h-16 flex items-center justify-around px-2 shadow-2xl">
+      <nav className="lg:hidden fixed bottom-0 inset-x-0 bg-slate-950 border-t border-slate-900 text-slate-400 z-40 h-16 flex items-center justify-around px-1 shadow-2xl">
+        <button
+          onClick={() => setActiveRole('Home')}
+          className={`flex flex-col items-center justify-center flex-1 h-full py-1.5 transition-all cursor-pointer ${
+            activeRole === 'Home' ? 'text-rose-500 font-extrabold' : 'hover:text-slate-200'
+          }`}
+        >
+          <Home className={`w-5 h-5 ${activeRole === 'Home' ? 'scale-110 text-rose-500' : ''}`} />
+          <span className="text-[10px] mt-1 font-bold">Inicio</span>
+        </button>
         <button
           onClick={() => setActiveRole('Admin')}
           className={`flex flex-col items-center justify-center flex-1 h-full py-1.5 transition-all cursor-pointer ${
