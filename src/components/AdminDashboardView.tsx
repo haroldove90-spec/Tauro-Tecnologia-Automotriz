@@ -127,7 +127,7 @@ export default function AdminDashboardView({ orders }: AdminDashboardViewProps) 
                     cx="72" 
                     cy="72" 
                     r="58" 
-                    stroke="#0f766e" 
+                    stroke="#10b981" 
                     strokeWidth="16" 
                     fill="transparent" 
                     strokeDasharray="364.4" 
@@ -155,7 +155,7 @@ export default function AdminDashboardView({ orders }: AdminDashboardViewProps) 
               </div>
               <h4 className="text-xs font-bold text-slate-800 mt-4 uppercase">Estado del Taller</h4>
               <p className="text-[10px] text-slate-400 mt-1 max-w-[200px] leading-relaxed">
-                Órdenes listas <span className="text-teal-700 font-bold">({completedPct}%)</span> y en proceso de reparación <span className="text-rose-600 font-bold">({inRepairPct}%)</span>.
+                Órdenes listas <span className="text-emerald-600 font-bold">({completedPct}%)</span> y en proceso de reparación <span className="text-rose-600 font-bold">({inRepairPct}%)</span>.
               </p>
             </div>
 
@@ -168,7 +168,7 @@ export default function AdminDashboardView({ orders }: AdminDashboardViewProps) 
                     cx="72" 
                     cy="72" 
                     r="58" 
-                    stroke="#0f766e" 
+                    stroke="#10b981" 
                     strokeWidth="16" 
                     fill="transparent" 
                     strokeDasharray="364.4" 
@@ -213,10 +213,10 @@ export default function AdminDashboardView({ orders }: AdminDashboardViewProps) 
               <div>
                 <div className="flex justify-between text-[11px] font-bold text-slate-600 mb-1">
                   <span>MEC. SOFÍA CÁRDENAS</span>
-                  <span className="font-mono text-teal-700">11,654 pts (4)</span>
+                  <span className="font-mono text-emerald-600">11,654 pts (4)</span>
                 </div>
                 <div className="h-3 w-full bg-slate-100 rounded-full overflow-hidden">
-                  <div className="h-full bg-teal-600 rounded-full" style={{ width: '78%' }} />
+                  <div className="h-full bg-emerald-500 rounded-full" style={{ width: '78%' }} />
                 </div>
               </div>
 
@@ -266,7 +266,7 @@ export default function AdminDashboardView({ orders }: AdminDashboardViewProps) 
               <svg className="w-40 h-40 absolute bottom-0">
                 <defs>
                   <linearGradient id="gaugeGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-                    <stop offset="0%" stopColor="#0f766e" />
+                    <stop offset="0%" stopColor="#10b981" />
                     <stop offset="60%" stopColor="#f59e0b" />
                     <stop offset="100%" stopColor="#ef4444" />
                   </linearGradient>

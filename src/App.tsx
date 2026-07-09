@@ -165,7 +165,7 @@ export default function App() {
       
       {/* Toast Alert pop-up */}
       {toastMessage && (
-        <div className="fixed top-5 right-5 z-50 max-w-sm bg-slate-900 border-l-4 border-rose-500 text-white p-4 rounded-xl shadow-2xl flex items-start gap-3 animate-bounce">
+        <div className="fixed top-5 right-5 z-50 max-w-sm bg-[#282829] border-l-4 border-rose-500 text-white p-4 rounded-xl shadow-2xl flex items-start gap-3 animate-bounce">
           <CheckCircle className="w-5 h-5 shrink-0 text-rose-500 mt-0.5" />
           <div>
             <h4 className="text-xs font-black tracking-wider uppercase text-rose-400">Sistema Digital</h4>
@@ -178,7 +178,7 @@ export default function App() {
           
           <div>
             {/* Logo Brand Header */}
-            <div className="p-6 border-b border-slate-900/50 flex items-center justify-between">
+            <div className="p-6 border-b border-zinc-700/50 flex items-center justify-between">
               <div className="flex items-center gap-3">
                 <img 
                   src="https://appdesignproyectos.com//taurologo.png" 
@@ -205,7 +205,7 @@ export default function App() {
                   <button
                     onClick={() => { setActiveAsesorTab('checkin'); setSidebarOpen(false); }}
                     className={`w-full text-left py-3 px-4 rounded-xl text-xs font-bold transition-all flex items-center gap-2.5 cursor-pointer ${
-                      activeAsesorTab === 'checkin' ? 'bg-rose-600 text-white font-extrabold shadow-lg shadow-rose-950/40' : 'hover:bg-slate-900 text-slate-400 hover:text-white'
+                      activeAsesorTab === 'checkin' ? 'bg-rose-600 text-white font-extrabold shadow-lg shadow-rose-950/40' : 'hover:bg-[#3c3c3e] text-slate-400 hover:text-white'
                     }`}
                   >
                     <ClipboardCheck className="w-4 h-4 shrink-0 text-rose-500" />
@@ -214,7 +214,7 @@ export default function App() {
                   <button
                     onClick={() => { setActiveAsesorTab('quotes'); setSidebarOpen(false); }}
                     className={`w-full text-left py-3 px-4 rounded-xl text-xs font-bold transition-all flex items-center gap-2.5 cursor-pointer ${
-                      activeAsesorTab === 'quotes' ? 'bg-rose-600 text-white font-extrabold shadow-lg shadow-rose-950/40' : 'hover:bg-slate-900 text-slate-400 hover:text-white'
+                      activeAsesorTab === 'quotes' ? 'bg-rose-600 text-white font-extrabold shadow-lg shadow-rose-950/40' : 'hover:bg-[#3c3c3e] text-slate-400 hover:text-white'
                     }`}
                   >
                     <FileText className="w-4 h-4 shrink-0 text-rose-500" />
@@ -223,7 +223,7 @@ export default function App() {
                   <button
                     onClick={() => { setActiveAsesorTab('monitor'); setSidebarOpen(false); }}
                     className={`w-full text-left py-3 px-4 rounded-xl text-xs font-bold transition-all flex items-center gap-2.5 cursor-pointer ${
-                      activeAsesorTab === 'monitor' ? 'bg-rose-600 text-white font-extrabold shadow-lg shadow-rose-950/40' : 'hover:bg-slate-900 text-slate-400 hover:text-white'
+                      activeAsesorTab === 'monitor' ? 'bg-rose-600 text-white font-extrabold shadow-lg shadow-rose-950/40' : 'hover:bg-[#3c3c3e] text-slate-400 hover:text-white'
                     }`}
                   >
                     <Layers className="w-4 h-4 shrink-0 text-rose-500" />
@@ -241,7 +241,7 @@ export default function App() {
                   <button
                     onClick={() => { setActiveMecanicoTab('tasks'); setSidebarOpen(false); }}
                     className={`w-full text-left py-3 px-4 rounded-xl text-xs font-bold transition-all flex items-center gap-2.5 cursor-pointer ${
-                      activeMecanicoTab === 'tasks' ? 'bg-rose-600 text-white font-extrabold shadow-lg shadow-rose-950/40' : 'hover:bg-slate-900 text-slate-400 hover:text-white'
+                      activeMecanicoTab === 'tasks' ? 'bg-rose-600 text-white font-extrabold shadow-lg shadow-rose-950/40' : 'hover:bg-[#3c3c3e] text-slate-400 hover:text-white'
                     }`}
                   >
                     <Wrench className="w-4 h-4 shrink-0 text-rose-500" />
@@ -250,7 +250,7 @@ export default function App() {
                   <button
                     onClick={() => { setActiveMecanicoTab('evidence'); setSidebarOpen(false); }}
                     className={`w-full text-left py-3 px-4 rounded-xl text-xs font-bold transition-all flex items-center gap-2.5 cursor-pointer ${
-                      activeMecanicoTab === 'evidence' ? 'bg-rose-600 text-white font-extrabold shadow-lg shadow-rose-950/40' : 'hover:bg-slate-900 text-slate-400 hover:text-white'
+                      activeMecanicoTab === 'evidence' ? 'bg-rose-600 text-white font-extrabold shadow-lg shadow-rose-950/40' : 'hover:bg-[#3c3c3e] text-slate-400 hover:text-white'
                     }`}
                   >
                     <Camera className="w-4 h-4 shrink-0 text-rose-500" />
@@ -259,7 +259,7 @@ export default function App() {
                   <button
                     onClick={() => { setActiveMecanicoTab('parts'); setSidebarOpen(false); }}
                     className={`w-full text-left py-3 px-4 rounded-xl text-xs font-bold transition-all flex items-center gap-2.5 cursor-pointer ${
-                      activeMecanicoTab === 'parts' ? 'bg-rose-600 text-white font-extrabold shadow-lg shadow-rose-950/40' : 'hover:bg-slate-900 text-slate-400 hover:text-white'
+                      activeMecanicoTab === 'parts' ? 'bg-rose-600 text-white font-extrabold shadow-lg shadow-rose-950/40' : 'hover:bg-[#3c3c3e] text-slate-400 hover:text-white'
                     }`}
                   >
                     <PackageOpen className="w-4 h-4 shrink-0 text-rose-500" />
@@ -277,7 +277,7 @@ export default function App() {
                   <button
                     onClick={() => { setActiveAdminTab('dashboard'); setSidebarOpen(false); }}
                     className={`w-full text-left py-3 px-4 rounded-xl text-xs font-bold transition-all flex items-center gap-2.5 cursor-pointer ${
-                      activeAdminTab === 'dashboard' ? 'bg-rose-600 text-white font-extrabold shadow-lg shadow-rose-950/40' : 'hover:bg-slate-900 text-slate-400 hover:text-white'
+                      activeAdminTab === 'dashboard' ? 'bg-rose-600 text-white font-extrabold shadow-lg shadow-rose-950/40' : 'hover:bg-[#3c3c3e] text-slate-400 hover:text-white'
                     }`}
                   >
                     <TrendingUp className="w-4 h-4 shrink-0 text-rose-500" />
@@ -286,7 +286,7 @@ export default function App() {
                   <button
                     onClick={() => { setActiveAdminTab('inventory'); setSidebarOpen(false); }}
                     className={`w-full text-left py-3 px-4 rounded-xl text-xs font-bold transition-all flex items-center gap-2.5 cursor-pointer ${
-                      activeAdminTab === 'inventory' ? 'bg-rose-600 text-white font-extrabold shadow-lg shadow-rose-950/40' : 'hover:bg-slate-900 text-slate-400 hover:text-white'
+                      activeAdminTab === 'inventory' ? 'bg-rose-600 text-white font-extrabold shadow-lg shadow-rose-950/40' : 'hover:bg-[#3c3c3e] text-slate-400 hover:text-white'
                     }`}
                   >
                     <PackageOpen className="w-4 h-4 shrink-0 text-rose-500" />
@@ -295,7 +295,7 @@ export default function App() {
                   <button
                     onClick={() => { setActiveAdminTab('users'); setSidebarOpen(false); }}
                     className={`w-full text-left py-3 px-4 rounded-xl text-xs font-bold transition-all flex items-center gap-2.5 cursor-pointer ${
-                      activeAdminTab === 'users' ? 'bg-rose-600 text-white font-extrabold shadow-lg shadow-rose-950/40' : 'hover:bg-slate-900 text-slate-400 hover:text-white'
+                      activeAdminTab === 'users' ? 'bg-rose-600 text-white font-extrabold shadow-lg shadow-rose-950/40' : 'hover:bg-[#3c3c3e] text-slate-400 hover:text-white'
                     }`}
                   >
                     <Users className="w-4 h-4 shrink-0 text-rose-500" />
@@ -304,7 +304,7 @@ export default function App() {
                   <button
                     onClick={() => { setActiveAdminTab('checkout'); setSidebarOpen(false); }}
                     className={`w-full text-left py-3 px-4 rounded-xl text-xs font-bold transition-all flex items-center gap-2.5 cursor-pointer ${
-                      activeAdminTab === 'checkout' ? 'bg-rose-600 text-white font-extrabold shadow-lg shadow-rose-950/40' : 'hover:bg-slate-900 text-slate-400 hover:text-white'
+                      activeAdminTab === 'checkout' ? 'bg-rose-600 text-white font-extrabold shadow-lg shadow-rose-950/40' : 'hover:bg-[#3c3c3e] text-slate-400 hover:text-white'
                     }`}
                   >
                     <CreditCard className="w-4 h-4 shrink-0 text-rose-500" />
@@ -313,7 +313,7 @@ export default function App() {
                   <button
                     onClick={() => { setActiveAdminTab('audit'); setSidebarOpen(false); }}
                     className={`w-full text-left py-3 px-4 rounded-xl text-xs font-bold transition-all flex items-center gap-2.5 cursor-pointer ${
-                      activeAdminTab === 'audit' ? 'bg-rose-600 text-white font-extrabold shadow-lg shadow-rose-950/40' : 'hover:bg-slate-900 text-slate-400 hover:text-white'
+                      activeAdminTab === 'audit' ? 'bg-rose-600 text-white font-extrabold shadow-lg shadow-rose-950/40' : 'hover:bg-[#3c3c3e] text-slate-400 hover:text-white'
                     }`}
                   >
                     <Shield className="w-4 h-4 shrink-0 text-rose-500" />
@@ -331,7 +331,7 @@ export default function App() {
                   <button
                     onClick={() => { setActiveClienteTab('timeline'); setSidebarOpen(false); }}
                     className={`w-full text-left py-3 px-4 rounded-xl text-xs font-bold transition-all flex items-center gap-2.5 cursor-pointer ${
-                      activeClienteTab === 'timeline' ? 'bg-rose-600 text-white font-extrabold shadow-lg shadow-rose-950/40' : 'hover:bg-slate-900 text-slate-400 hover:text-white'
+                      activeClienteTab === 'timeline' ? 'bg-rose-600 text-white font-extrabold shadow-lg shadow-rose-950/40' : 'hover:bg-[#3c3c3e] text-slate-400 hover:text-white'
                     }`}
                   >
                     <Clock className="w-4 h-4 shrink-0 text-rose-500" />
@@ -340,7 +340,7 @@ export default function App() {
                   <button
                     onClick={() => { setActiveClienteTab('budget'); setSidebarOpen(false); }}
                     className={`w-full text-left py-3 px-4 rounded-xl text-xs font-bold transition-all flex items-center gap-2.5 cursor-pointer ${
-                      activeClienteTab === 'budget' ? 'bg-rose-600 text-white font-extrabold shadow-lg shadow-rose-950/40' : 'hover:bg-slate-900 text-slate-400 hover:text-white'
+                      activeClienteTab === 'budget' ? 'bg-rose-600 text-white font-extrabold shadow-lg shadow-rose-950/40' : 'hover:bg-[#3c3c3e] text-slate-400 hover:text-white'
                     }`}
                   >
                     <FileText className="w-4 h-4 shrink-0 text-rose-500" />
@@ -349,7 +349,7 @@ export default function App() {
                   <button
                     onClick={() => { setActiveClienteTab('evidence'); setSidebarOpen(false); }}
                     className={`w-full text-left py-3 px-4 rounded-xl text-xs font-bold transition-all flex items-center gap-2.5 cursor-pointer ${
-                      activeClienteTab === 'evidence' ? 'bg-rose-600 text-white font-extrabold shadow-lg shadow-rose-950/40' : 'hover:bg-slate-900 text-slate-400 hover:text-white'
+                      activeClienteTab === 'evidence' ? 'bg-rose-600 text-white font-extrabold shadow-lg shadow-rose-950/40' : 'hover:bg-[#3c3c3e] text-slate-400 hover:text-white'
                     }`}
                   >
                     <Camera className="w-4 h-4 shrink-0 text-rose-500" />
@@ -358,7 +358,7 @@ export default function App() {
                   <button
                     onClick={() => { setActiveClienteTab('cdmx'); setSidebarOpen(false); }}
                     className={`w-full text-left py-3 px-4 rounded-xl text-xs font-bold transition-all flex items-center gap-2.5 cursor-pointer ${
-                      activeClienteTab === 'cdmx' ? 'bg-rose-600 text-white font-extrabold shadow-lg shadow-rose-950/40' : 'hover:bg-slate-900 text-slate-400 hover:text-white'
+                      activeClienteTab === 'cdmx' ? 'bg-rose-600 text-white font-extrabold shadow-lg shadow-rose-950/40' : 'hover:bg-[#3c3c3e] text-slate-400 hover:text-white'
                     }`}
                   >
                     <Award className="w-4 h-4 shrink-0 text-rose-500" />
@@ -373,7 +373,7 @@ export default function App() {
                   setActiveRole('Home');
                   setSidebarOpen(false);
                 }}
-                className="w-full text-left py-3 px-4 rounded-xl text-xs font-black transition-all flex items-center gap-2.5 hover:bg-rose-950/20 text-rose-400 hover:text-rose-300 mt-4 border-t border-slate-900 pt-4 cursor-pointer"
+                className="w-full text-left py-3 px-4 rounded-xl text-xs font-black transition-all flex items-center gap-2.5 hover:bg-rose-950/20 text-rose-400 hover:text-rose-300 mt-4 border-t border-zinc-700/50 pt-4 cursor-pointer"
               >
                 <LogOut className="w-4 h-4 shrink-0" />
                 <span>Cerrar Sesión (Salir)</span>
@@ -383,10 +383,10 @@ export default function App() {
           </div>
 
           {/* Sidebar Footer */}
-          <div className="p-4 border-t border-slate-900 flex flex-col gap-2 font-sans">
+          <div className="p-4 border-t border-zinc-700/50 flex flex-col gap-2 font-sans">
             <button
               onClick={handleResetDemo}
-              className="w-full py-2 bg-slate-900 hover:bg-slate-850 text-slate-500 hover:text-white font-bold text-[9px] uppercase rounded-lg transition-all cursor-pointer border border-slate-800"
+              className="w-full py-2 bg-[#1e1e1f] hover:bg-[#333334] text-slate-500 hover:text-white font-bold text-[9px] uppercase rounded-lg transition-all cursor-pointer border border-zinc-700/30"
             >
               🔄 Reiniciar Simulador
             </button>
@@ -669,7 +669,7 @@ export default function App() {
 
       {/* Bottom Navigation Bar for Mobile & Tablet */}
       {activeRole !== 'Home' && (
-        <nav className="lg:hidden fixed bottom-0 inset-x-0 bg-[#282829] border-t border-slate-800 text-slate-400 z-40 h-16 flex items-center justify-around px-1 shadow-2xl">
+        <nav className="lg:hidden fixed bottom-0 inset-x-0 bg-[#282829] border-t border-zinc-700/50 text-slate-400 z-40 h-16 flex items-center justify-around px-1 shadow-2xl">
           
           {/* Asesor Bottom Navigation */}
           {activeRole === 'Asesor' && (
@@ -824,7 +824,7 @@ export default function App() {
           {/* Shared Logout Button for Mobile */}
           <button
             onClick={() => setActiveRole('Home')}
-            className="flex flex-col items-center justify-center flex-1 h-full py-1.5 hover:text-rose-400 transition-all cursor-pointer border-l border-slate-900"
+            className="flex flex-col items-center justify-center flex-1 h-full py-1.5 hover:text-rose-400 transition-all cursor-pointer border-l border-zinc-700/50"
           >
             <LogOut className="w-5 h-5 text-rose-500" />
             <span className="text-[9px] mt-1 font-bold text-rose-500">Salir</span>

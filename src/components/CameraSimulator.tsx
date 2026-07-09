@@ -107,7 +107,7 @@ export default function CameraSimulator({ onCapture, evidenceType }: CameraSimul
           className={`flex-1 flex items-center justify-center gap-2 py-2 text-xs font-semibold rounded-lg transition-all cursor-pointer ${
             activeTab === 'mock' 
               ? 'bg-white text-rose-600 shadow-sm' 
-              : 'text-slate-600 hover:text-slate-900'
+              : 'text-zinc-600 hover:text-[#282829]'
           }`}
         >
           <ImageIcon className="w-4 h-4" />
@@ -119,7 +119,7 @@ export default function CameraSimulator({ onCapture, evidenceType }: CameraSimul
           className={`flex-1 flex items-center justify-center gap-2 py-2 text-xs font-semibold rounded-lg transition-all cursor-pointer ${
             activeTab === 'camera' 
               ? 'bg-white text-rose-600 shadow-sm' 
-              : 'text-slate-600 hover:text-slate-900'
+              : 'text-zinc-600 hover:text-[#282829]'
           }`}
         >
           <Camera className="w-4 h-4" />

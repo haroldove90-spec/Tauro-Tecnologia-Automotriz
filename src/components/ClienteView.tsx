@@ -131,7 +131,7 @@ export default function ClienteView({
     <div className="flex flex-col gap-6">
       
       {/* Header Selector for Demo Simulation */}
-      <div className="bg-slate-900 border border-slate-800 text-white p-4 rounded-2xl flex flex-col md:flex-row items-center justify-between gap-4 shadow-md">
+      <div className="bg-[#282829] border border-zinc-700/50 text-white p-4 rounded-2xl flex flex-col md:flex-row items-center justify-between gap-4 shadow-md">
         <div className="flex items-center gap-2.5">
           <HeartHandshake className="w-5 h-5 text-rose-500" />
           <div>

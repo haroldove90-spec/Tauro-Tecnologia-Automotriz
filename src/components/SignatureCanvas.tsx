@@ -28,7 +28,7 @@ export default function SignatureCanvas({ onSave, onClear, initialSignature }: S
     ctx.lineCap = 'round';
     ctx.lineJoin = 'round';
     ctx.lineWidth = 2.5;
-    ctx.strokeStyle = '#0f172a'; // Deep slate slate-900
+    ctx.strokeStyle = '#282829'; // Solid dark gray
 
     if (initialSignature) {
       const img = new Image();

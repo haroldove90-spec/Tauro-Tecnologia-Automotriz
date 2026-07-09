@@ -155,8 +155,8 @@ export default function MecanicoView({
       {/* 1. MÓDULO TABLERO DE TRABAJO / TAREAS */}
       {activeSubTab === 'tasks' && (
         <div className="max-w-2xl mx-auto w-full flex flex-col gap-4">
-          <div className="bg-slate-800 text-white border border-slate-700 rounded-2xl p-5 shadow flex flex-col gap-4">
-            <div className="flex items-center gap-2 border-b border-slate-700 pb-3">
+          <div className="bg-[#282829] text-white border border-zinc-700/50 rounded-2xl p-5 shadow flex flex-col gap-4">
+            <div className="flex items-center gap-2 border-b border-zinc-700/50 pb-3">
               <Wrench className="w-5 h-5 text-rose-500" />
               <div>
                 <h3 className="text-sm font-extrabold text-white">Tablero de Trabajo (Mecánico)</h3>
@@ -177,14 +177,14 @@ export default function MecanicoView({
                     className={`w-full text-left p-4 rounded-xl border transition-all flex items-center justify-between cursor-pointer group ${
                       isSelected 
                         ? 'bg-rose-600 text-white border-rose-600 shadow-md' 
-                        : 'bg-slate-900 border-slate-700 hover:bg-slate-750 text-slate-300'
+                        : 'bg-[#1e1e1f] border-zinc-700/50 hover:bg-[#333334] text-slate-300'
                     }`}
                   >
                     <div className="flex-1">
                       <div className="flex items-center gap-1.5 justify-between">
                         <span className="text-xs font-black tracking-wider">{o.id}</span>
                         <span className={`text-[9px] font-black uppercase px-1.5 py-0.5 rounded ${
-                          isSelected ? 'bg-white text-rose-600' : 'bg-slate-800 text-slate-300'
+                          isSelected ? 'bg-white text-rose-600' : 'bg-zinc-800 text-slate-300'
                         }`}>
                           {o.status}
                         </span>
@@ -206,7 +206,7 @@ export default function MecanicoView({
               })}
 
               {activeAssignments.length === 0 && (
-                <div className="text-center p-8 text-slate-500 text-xs bg-slate-900/50 rounded-xl border border-slate-800">
+                <div className="text-center p-8 text-slate-500 text-xs bg-[#1e1e1f]/50 rounded-xl border border-zinc-700/50">
                   No hay vehículos en rampa asignados actualmente.
                 </div>
               )}
@@ -429,7 +429,7 @@ export default function MecanicoView({
                       <button
                         type="submit"
                         disabled={!selectedInventoryId}
-                        className="w-full py-2 bg-slate-800 hover:bg-slate-900 disabled:bg-slate-200 text-white text-xs font-bold rounded-lg uppercase flex items-center justify-center gap-1 transition-all cursor-pointer shadow-sm"
+                        className="w-full py-2 bg-[#282829] hover:bg-[#3c3c3e] disabled:bg-slate-200 text-white text-xs font-bold rounded-lg uppercase flex items-center justify-center gap-1 transition-all cursor-pointer shadow-sm"
                       >
                         <Plus className="w-4 h-4" /> Cargar
                       </button>

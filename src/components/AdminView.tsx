@@ -151,7 +151,7 @@ export default function AdminView({
         <button
           onClick={() => setActiveSubTab('dashboard')}
           className={`px-4 py-2 text-xs font-bold rounded-lg transition-all cursor-pointer ${
-            activeSubTab === 'dashboard' ? 'bg-white text-rose-600 shadow-sm' : 'text-slate-600 hover:text-slate-900'
+            activeSubTab === 'dashboard' ? 'bg-white text-rose-600 shadow-sm' : 'text-zinc-600 hover:text-[#282829]'
           }`}
         >
           📈 Dashboard Global
@@ -159,7 +159,7 @@ export default function AdminView({
         <button
           onClick={() => setActiveSubTab('inventory')}
           className={`px-4 py-2 text-xs font-bold rounded-lg transition-all cursor-pointer ${
-            activeSubTab === 'inventory' ? 'bg-white text-rose-600 shadow-sm' : 'text-slate-600 hover:text-slate-900'
+            activeSubTab === 'inventory' ? 'bg-white text-rose-600 shadow-sm' : 'text-zinc-600 hover:text-[#282829]'
           }`}
         >
           📦 Catálogo / Almacén
@@ -167,7 +167,7 @@ export default function AdminView({
         <button
           onClick={() => setActiveSubTab('users')}
           className={`px-4 py-2 text-xs font-bold rounded-lg transition-all cursor-pointer ${
-            activeSubTab === 'users' ? 'bg-white text-rose-600 shadow-sm' : 'text-slate-600 hover:text-slate-900'
+            activeSubTab === 'users' ? 'bg-white text-rose-600 shadow-sm' : 'text-zinc-600 hover:text-[#282829]'
           }`}
         >
           👥 Control de Personal
@@ -175,7 +175,7 @@ export default function AdminView({
         <button
           onClick={() => setActiveSubTab('checkout')}
           className={`px-4 py-2 text-xs font-bold rounded-lg transition-all cursor-pointer ${
-            activeSubTab === 'checkout' ? 'bg-white text-rose-600 shadow-sm' : 'text-slate-600 hover:text-slate-900'
+            activeSubTab === 'checkout' ? 'bg-white text-rose-600 shadow-sm' : 'text-zinc-600 hover:text-[#282829]'
           }`}
         >
           💳 Caja y Liquidación
@@ -183,7 +183,7 @@ export default function AdminView({
         <button
           onClick={() => setActiveSubTab('audit')}
           className={`px-4 py-2 text-xs font-bold rounded-lg transition-all cursor-pointer ${
-            activeSubTab === 'audit' ? 'bg-white text-rose-600 shadow-sm' : 'text-slate-600 hover:text-slate-900'
+            activeSubTab === 'audit' ? 'bg-white text-rose-600 shadow-sm' : 'text-zinc-600 hover:text-[#282829]'
           }`}
         >
           🔍 Auditoría de Evidencias
@@ -353,7 +353,7 @@ export default function AdminView({
 
               <button
                 type="submit"
-                className="w-full py-2 bg-slate-800 hover:bg-slate-900 text-white font-bold text-xs uppercase rounded-xl transition-all shadow-sm flex items-center justify-center gap-1 cursor-pointer"
+                className="w-full py-2 bg-[#282829] hover:bg-[#3c3c3e] text-white font-bold text-xs uppercase rounded-xl transition-all shadow-sm flex items-center justify-center gap-1 cursor-pointer"
               >
                 <Plus className="w-4 h-4" /> Registrar Refacción
               </button>
@@ -457,7 +457,7 @@ export default function AdminView({
 
               <button
                 type="submit"
-                className="w-full py-2 bg-slate-800 hover:bg-slate-900 text-white font-bold text-xs uppercase rounded-xl transition-all shadow-sm flex items-center justify-center gap-1 cursor-pointer"
+                className="w-full py-2 bg-[#282829] hover:bg-[#3c3c3e] text-white font-bold text-xs uppercase rounded-xl transition-all shadow-sm flex items-center justify-center gap-1 cursor-pointer"
               >
                 <Plus className="w-4 h-4" /> Registrar Colaborador
               </button>
