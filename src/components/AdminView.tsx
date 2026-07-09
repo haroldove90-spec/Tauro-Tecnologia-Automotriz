@@ -147,7 +147,7 @@ export default function AdminView({
     <div className="flex flex-col gap-6">
       
       {/* Sub-tabs header matching visual layout */}
-      <div className="flex flex-wrap bg-slate-100 rounded-xl p-1 self-start gap-1">
+      <div className="hidden lg:flex flex-wrap bg-slate-100 rounded-xl p-1 self-start gap-1">
         <button
           onClick={() => setActiveSubTab('dashboard')}
           className={`px-4 py-2 text-xs font-bold rounded-lg transition-all cursor-pointer ${
@@ -500,7 +500,7 @@ export default function AdminView({
               <div className="lg:col-span-2 flex flex-col gap-4">
                 <h4 className="text-xs font-extrabold text-slate-800 uppercase tracking-wider mb-1">Conceptos Cargados a la Cuenta</h4>
                 
-                <div className="border border-slate-200 rounded-xl overflow-hidden bg-white">
+                <div className="border border-slate-200 rounded-xl overflow-x-auto bg-white">
                   <table className="w-full text-left text-xs">
                     <thead>
                       <tr className="bg-slate-50 text-slate-500 font-bold border-b border-slate-100 text-[10px]">
@@ -532,7 +532,7 @@ export default function AdminView({
                 </div>
 
                 {/* Subtotals Box */}
-                <div className="bg-slate-50 rounded-xl p-4 border border-slate-100 self-end w-72 flex flex-col gap-1.5">
+                <div className="bg-slate-50 rounded-xl p-4 border border-slate-100 sm:self-end w-full sm:w-72 flex flex-col gap-1.5">
                   <div className="flex justify-between text-xs text-slate-500">
                     <span>Subtotal Neto</span>
                     <span className="font-mono">${(selectedCheckoutOrder.budget.totalPrice * 0.84).toFixed(2)}</span>

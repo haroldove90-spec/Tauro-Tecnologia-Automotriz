@@ -42,7 +42,7 @@ export default function AdminDashboardView({ orders }: AdminDashboardViewProps) 
   return (
     <div className="flex flex-col gap-6">
       {/* Dynamic Summary Cards */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         <div className="bg-white border border-slate-200/80 rounded-xl p-4 shadow-sm flex items-center justify-between">
           <div>
             <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">Ingresos del Día</span>

@@ -174,35 +174,23 @@ export default function App() {
         </div>
       )}
       {activeRole !== 'Home' && (
-        <aside className={`fixed inset-y-0 left-0 z-40 w-72 bg-slate-950 text-slate-300 transform ${
-          sidebarOpen ? 'translate-x-0' : '-translate-x-full'
-        } lg:translate-x-0 lg:static transition-transform duration-300 ease-in-out border-r border-slate-900 shadow-xl flex flex-col justify-between`}>
+        <aside className="hidden lg:flex lg:w-72 bg-[#282829] text-slate-300 border-r border-slate-800 shadow-xl lg:static min-h-screen flex-col justify-between shrink-0">
           
           <div>
             {/* Logo Brand Header */}
-            <div className="p-6 border-b border-slate-900 flex items-center justify-between">
+            <div className="p-6 border-b border-slate-900/50 flex items-center justify-between">
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 bg-slate-900 rounded-xl flex items-center justify-center border border-slate-800 shadow-lg overflow-hidden shrink-0">
-                  <img 
-                    src="https://appdesignproyectos.com//taurologo.png" 
-                    alt="Tauro Logo" 
-                    className="w-full h-full object-contain" 
-                    referrerPolicy="no-referrer" 
-                  />
-                </div>
+                <img 
+                  src="https://appdesignproyectos.com//taurologo.png" 
+                  alt="Tauro Logo" 
+                  className="w-10 h-10 object-contain shrink-0" 
+                  referrerPolicy="no-referrer" 
+                />
                 <div>
                   <h1 className="text-xs font-black text-white tracking-wide uppercase leading-none">TAURO</h1>
                   <span className="text-[9px] font-black tracking-widest text-rose-500 block mt-1">TECNOLOGÍA</span>
                 </div>
               </div>
-              
-              {/* Mobile close menu */}
-              <button 
-                onClick={() => setSidebarOpen(false)} 
-                className="lg:hidden p-1.5 text-slate-400 hover:text-white hover:bg-slate-900 rounded-lg cursor-pointer"
-              >
-                <X className="w-5 h-5" />
-              </button>
             </div>
 
             {/* Navigation Menu Group for Sub-Tabs */}
@@ -410,31 +398,21 @@ export default function App() {
       )}
 
       {/* Main Content Pane */}
-      <div className="flex-1 flex flex-col min-h-screen">
+      <div className="flex-1 flex flex-col min-h-screen overflow-x-hidden">
         
         {/* Dynamic Top bar header mimicking the screenshot layout */}
         {activeRole !== 'Home' && (
           <header className="bg-white border-b border-slate-200/80 px-4 md:px-6 py-3.5 flex items-center justify-between">
             
             <div className="flex items-center gap-2 md:gap-3">
-              {activeRole !== 'Home' && (
-                <button 
-                  onClick={() => setSidebarOpen(true)}
-                  className="lg:hidden p-2 text-slate-600 hover:text-slate-900 hover:bg-slate-100 rounded-lg cursor-pointer"
-                >
-                  <Menu className="w-5 h-5" />
-                </button>
-              )}
               
               <div className="flex items-center gap-2">
-                <div className="w-8 h-8 rounded bg-slate-50 border border-slate-200 flex items-center justify-center overflow-hidden shrink-0">
-                  <img 
-                    src="https://appdesignproyectos.com//taurologo.png" 
-                    alt="Tauro Logo" 
-                    className="w-full h-full object-contain" 
-                    referrerPolicy="no-referrer" 
-                  />
-                </div>
+                <img 
+                  src="https://appdesignproyectos.com//taurologo.png" 
+                  alt="Tauro Logo" 
+                  className="w-8 h-8 object-contain shrink-0" 
+                  referrerPolicy="no-referrer" 
+                />
                 <div className="flex flex-col">
                   <span className="text-[9px] font-black uppercase text-rose-500 tracking-wider">Tauro Tecnología</span>
                   <h2 className="text-xs md:text-sm font-black text-slate-800 tracking-tight flex items-center gap-1.5 mt-0.5">
@@ -455,7 +433,7 @@ export default function App() {
               {activeRole !== 'Home' && (
                 <button
                   onClick={() => setActiveRole('Home')}
-                  className="flex items-center gap-1.5 bg-slate-50 hover:bg-slate-100 text-slate-700 text-[10px] font-black px-2.5 py-1.5 rounded-full border border-slate-200 uppercase transition-all cursor-pointer"
+                  className="flex items-center justify-center bg-slate-50 hover:bg-slate-100 text-slate-700 text-[10px] font-black p-2 sm:px-2.5 sm:py-1.5 rounded-full border border-slate-200 uppercase transition-all cursor-pointer"
                   title="Volver al Menú de Inicio"
                 >
                   <Home className="w-3.5 h-3.5 text-rose-600" />
@@ -482,12 +460,11 @@ export default function App() {
               {/* PWA Mobile Installation Button */}
               <button
                 onClick={handleInstallApp}
-                className="flex items-center gap-1 bg-rose-600 hover:bg-rose-700 text-white text-[10px] font-extrabold px-2.5 py-1.5 rounded-full uppercase transition-all shadow-md shadow-rose-950/20 cursor-pointer"
+                className="flex items-center justify-center bg-rose-600 hover:bg-rose-700 text-white text-[10px] font-extrabold p-2 sm:px-2.5 sm:py-1.5 rounded-full uppercase transition-all shadow-md shadow-rose-950/20 cursor-pointer"
                 title="Instalar Aplicación Móvil"
               >
                 <Smartphone className="w-3.5 h-3.5" />
                 <span className="hidden sm:inline">Instalar App</span>
-                <span className="sm:hidden">Instalar</span>
               </button>
 
               {/* Help guidelines badge */}
@@ -508,8 +485,8 @@ export default function App() {
                 </button>
 
                 {showNotificationDropdown && (
-                  <div className="absolute right-0 mt-2 w-80 bg-slate-950 text-slate-200 border border-slate-900 rounded-2xl shadow-2xl p-4 z-50 flex flex-col gap-3">
-                    <div className="flex justify-between items-center border-b border-slate-900 pb-2">
+                  <div className="absolute right-0 mt-2 w-80 bg-[#282829] text-slate-200 border border-slate-800 rounded-2xl shadow-2xl p-4 z-50 flex flex-col gap-3">
+                    <div className="flex justify-between items-center border-b border-slate-800 pb-2">
                       <span className="text-[10px] font-black uppercase tracking-wider text-rose-500">Notificaciones Recientes</span>
                       <button 
                         onClick={() => setNotifications([])}
@@ -590,7 +567,7 @@ export default function App() {
                     onClick={() => setActiveRole('Admin')}
                     className="flex flex-col items-center justify-center p-6 bg-slate-50 hover:bg-rose-50 hover:text-rose-600 border border-slate-200 hover:border-rose-300 rounded-2xl transition-all cursor-pointer group shadow-sm hover:shadow-md"
                   >
-                    <div className="w-12 h-12 bg-slate-950 group-hover:bg-rose-600 text-rose-500 group-hover:text-white rounded-xl flex items-center justify-center mb-3 shadow transition-all duration-300">
+                    <div className="w-12 h-12 bg-[#282829] group-hover:bg-rose-600 text-rose-500 group-hover:text-white rounded-xl flex items-center justify-center mb-3 shadow transition-all duration-300">
                       <Award className="w-6 h-6" />
                     </div>
                     <span className="text-xs font-black tracking-wide uppercase text-slate-800 group-hover:text-rose-600">
@@ -603,7 +580,7 @@ export default function App() {
                     onClick={() => setActiveRole('Asesor')}
                     className="flex flex-col items-center justify-center p-6 bg-slate-50 hover:bg-rose-50 hover:text-rose-600 border border-slate-200 hover:border-rose-300 rounded-2xl transition-all cursor-pointer group shadow-sm hover:shadow-md"
                   >
-                    <div className="w-12 h-12 bg-slate-950 group-hover:bg-rose-600 text-rose-500 group-hover:text-white rounded-xl flex items-center justify-center mb-3 shadow transition-all duration-300">
+                    <div className="w-12 h-12 bg-[#282829] group-hover:bg-rose-600 text-rose-500 group-hover:text-white rounded-xl flex items-center justify-center mb-3 shadow transition-all duration-300">
                       <ClipboardCheck className="w-6 h-6" />
                     </div>
                     <span className="text-xs font-black tracking-wide uppercase text-slate-800 group-hover:text-rose-600">
@@ -616,7 +593,7 @@ export default function App() {
                     onClick={() => setActiveRole('Mecánico')}
                     className="flex flex-col items-center justify-center p-6 bg-slate-50 hover:bg-rose-50 hover:text-rose-600 border border-slate-200 hover:border-rose-300 rounded-2xl transition-all cursor-pointer group shadow-sm hover:shadow-md"
                   >
-                    <div className="w-12 h-12 bg-slate-950 group-hover:bg-rose-600 text-rose-500 group-hover:text-white rounded-xl flex items-center justify-center mb-3 shadow transition-all duration-300">
+                    <div className="w-12 h-12 bg-[#282829] group-hover:bg-rose-600 text-rose-500 group-hover:text-white rounded-xl flex items-center justify-center mb-3 shadow transition-all duration-300">
                       <Wrench className="w-6 h-6" />
                     </div>
                     <span className="text-xs font-black tracking-wide uppercase text-slate-800 group-hover:text-rose-600">
@@ -629,7 +606,7 @@ export default function App() {
                     onClick={() => setActiveRole('Cliente')}
                     className="flex flex-col items-center justify-center p-6 bg-slate-50 hover:bg-rose-50 hover:text-rose-600 border border-slate-200 hover:border-rose-300 rounded-2xl transition-all cursor-pointer group shadow-sm hover:shadow-md"
                   >
-                    <div className="w-12 h-12 bg-slate-950 group-hover:bg-rose-600 text-rose-500 group-hover:text-white rounded-xl flex items-center justify-center mb-3 shadow transition-all duration-300">
+                    <div className="w-12 h-12 bg-[#282829] group-hover:bg-rose-600 text-rose-500 group-hover:text-white rounded-xl flex items-center justify-center mb-3 shadow transition-all duration-300">
                       <Smartphone className="w-6 h-6" />
                     </div>
                     <span className="text-xs font-black tracking-wide uppercase text-slate-800 group-hover:text-rose-600">
@@ -692,7 +669,7 @@ export default function App() {
 
       {/* Bottom Navigation Bar for Mobile & Tablet */}
       {activeRole !== 'Home' && (
-        <nav className="lg:hidden fixed bottom-0 inset-x-0 bg-slate-950 border-t border-slate-900 text-slate-400 z-40 h-16 flex items-center justify-around px-1 shadow-2xl">
+        <nav className="lg:hidden fixed bottom-0 inset-x-0 bg-[#282829] border-t border-slate-800 text-slate-400 z-40 h-16 flex items-center justify-around px-1 shadow-2xl">
           
           {/* Asesor Bottom Navigation */}
           {activeRole === 'Asesor' && (

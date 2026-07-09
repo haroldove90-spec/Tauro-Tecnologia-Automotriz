@@ -256,7 +256,7 @@ export default function AsesorView({
     <div className="flex flex-col gap-6">
       
       {/* Sub tabs header */}
-      <div className="flex bg-slate-100 rounded-xl p-1 self-start">
+      <div className="hidden lg:flex bg-slate-100 rounded-xl p-1 self-start">
         <button
           onClick={() => setActiveSubTab('checkin')}
           className={`px-4 py-2 text-xs font-bold rounded-lg transition-all cursor-pointer ${
@@ -347,7 +347,7 @@ export default function AsesorView({
                         className="w-full text-xs border border-slate-300 rounded-lg px-3 py-2 bg-slate-50/50 focus:bg-white focus:border-rose-500 outline-none uppercase font-mono tracking-wider"
                       />
                     </div>
-                    <div className="grid grid-cols-3 gap-2 md:col-span-2">
+                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 md:col-span-2">
                       <div>
                         <label className="block text-[10px] font-bold text-slate-500 mb-1">Marca *</label>
                         <input 
@@ -390,7 +390,7 @@ export default function AsesorView({
                   <div className="flex flex-col gap-4">
                     <div>
                       <label className="block text-[10px] font-bold text-slate-500 mb-1">Nivel de Combustible ({gasLevel}%)</label>
-                      <div className="flex gap-2">
+                      <div className="grid grid-cols-5 gap-1 md:gap-2">
                         {[0, 25, 50, 75, 100].map(val => (
                           <button
                             key={val}
@@ -408,7 +408,7 @@ export default function AsesorView({
                       </div>
                     </div>
 
-                    <div className="grid grid-cols-2 gap-3 mt-1">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-1">
                       <label className="flex items-center gap-2 p-2.5 bg-slate-50 border border-slate-200 rounded-lg text-xs cursor-pointer select-none">
                         <input 
                           type="checkbox" 
@@ -636,7 +636,7 @@ export default function AsesorView({
                   <div>
                     <h4 className="text-xs font-extrabold text-slate-800 uppercase mb-2">Desglose Actual de la Cotización</h4>
                     {selectedQuoteOrder.budget.items.length > 0 ? (
-                      <div className="border border-slate-200 rounded-xl overflow-hidden shadow-sm bg-white">
+                      <div className="border border-slate-200 rounded-xl overflow-x-auto shadow-sm bg-white">
                         <table className="w-full text-left text-xs border-collapse">
                           <thead>
                             <tr className="bg-slate-50 text-slate-500 font-bold border-b border-slate-100 text-[10px]">
