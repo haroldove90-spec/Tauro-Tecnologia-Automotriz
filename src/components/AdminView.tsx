@@ -15,12 +15,31 @@ interface AdminViewProps {
   onUpdateUsers: (updatedUsers: User[]) => void;
   onUpdateOrder: (updatedOrder: ServiceOrder) => void;
   onSendToast: (msg: string) => void;
+  activeSubTab?: 'dashboard' | 'inventory' | 'users' | 'checkout' | 'audit';
+  onChangeSubTab?: (tab: 'dashboard' | 'inventory' | 'users' | 'checkout' | 'audit') => void;
 }
 
 export default function AdminView({ 
-  orders, inventory, users, onUpdateInventory, onUpdateUsers, onUpdateOrder, onSendToast 
+  orders, 
+  inventory, 
+  users, 
+  onUpdateInventory, 
+  onUpdateUsers, 
+  onUpdateOrder, 
+  onSendToast,
+  activeSubTab: externalActiveSubTab,
+  onChangeSubTab: externalOnChangeSubTab
 }: AdminViewProps) {
-  const [activeSubTab, setActiveSubTab] = useState<'dashboard' | 'inventory' | 'users' | 'checkout' | 'audit'>('dashboard');
+  const [internalActiveSubTab, setInternalActiveSubTab] = useState<'dashboard' | 'inventory' | 'users' | 'checkout' | 'audit'>('dashboard');
+  
+  const activeSubTab = externalActiveSubTab !== undefined ? externalActiveSubTab : internalActiveSubTab;
+  const setActiveSubTab = (tab: 'dashboard' | 'inventory' | 'users' | 'checkout' | 'audit') => {
+    if (externalOnChangeSubTab) {
+      externalOnChangeSubTab(tab);
+    } else {
+      setInternalActiveSubTab(tab);
+    }
+  };
 
   // Almacén / Price Nutridor state
   const [editingInvId, setEditingInvId] = useState<string | null>(null);

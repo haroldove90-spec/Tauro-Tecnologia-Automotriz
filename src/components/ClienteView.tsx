@@ -10,11 +10,23 @@ interface ClienteViewProps {
   orders: ServiceOrder[];
   onUpdateOrder: (updatedOrder: ServiceOrder) => void;
   onSendToast: (msg: string) => void;
+  activeSubTab?: 'timeline' | 'budget' | 'evidence' | 'cdmx';
+  onChangeSubTab?: (tab: 'timeline' | 'budget' | 'evidence' | 'cdmx') => void;
 }
 
-export default function ClienteView({ orders, onUpdateOrder, onSendToast }: ClienteViewProps) {
+export default function ClienteView({ 
+  orders, 
+  onUpdateOrder, 
+  onSendToast,
+  activeSubTab: propActiveSubTab,
+  onChangeSubTab
+}: ClienteViewProps) {
   const [selectedOrderId, setSelectedOrderId] = useState<string>(orders[0]?.id || '');
   const selectedOrder = orders.find(o => o.id === selectedOrderId);
+
+  const [localActiveSubTab, setLocalActiveSubTab] = useState<'timeline' | 'budget' | 'evidence' | 'cdmx'>('timeline');
+  const activeSubTab = propActiveSubTab || localActiveSubTab;
+  const setActiveSubTab = onChangeSubTab || setLocalActiveSubTab;
 
   // Status index for timeline progress
   const getStatusStep = (status: string) => {
@@ -145,16 +157,19 @@ export default function ClienteView({ orders, onUpdateOrder, onSendToast }: Clie
       </div>
 
       {selectedOrder ? (
-        <div className="grid grid-cols-1 xl:grid-cols-3 gap-6">
+        <div className="max-w-4xl mx-auto w-full flex flex-col gap-6">
           
-          {/* Timeline and Budget Approval Column */}
-          <div className="xl:col-span-2 flex flex-col gap-6">
-            
-            {/* 1. Real-time Status Timeline */}
-            <div className="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm">
-              <h3 className="text-xs font-extrabold uppercase tracking-wider text-slate-500 mb-6 flex items-center gap-1.5">
-                <Clock className="w-4 h-4 text-rose-500" /> Progreso de su Vehículo en Tiempo Real
-              </h3>
+          {/* 1. Real-time Status Timeline Tab */}
+          {activeSubTab === 'timeline' && (
+            <div className="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm flex flex-col gap-6">
+              <div>
+                <h3 className="text-sm font-extrabold text-slate-800 uppercase tracking-wider flex items-center gap-1.5">
+                  <Clock className="w-5 h-5 text-rose-500" /> Progreso de su Vehículo en Tiempo Real
+                </h3>
+                <p className="text-xs text-slate-400 font-medium mt-1">
+                  Sigue el estatus operativo de tu auto {selectedOrder.brand} {selectedOrder.model} ({selectedOrder.plate})
+                </p>
+              </div>
 
               {/* Progress Bar Timeline UI */}
               <div className="relative flex flex-col md:flex-row justify-between items-start md:items-center gap-8 md:gap-4 py-4 px-2">
@@ -201,8 +216,8 @@ export default function ClienteView({ orders, onUpdateOrder, onSendToast }: Clie
 
               {/* Ready Notification Alert Banner */}
               {selectedOrder.status === 'Listo' && (
-                <div className="mt-6 p-4 bg-emerald-50 border border-emerald-100 rounded-xl flex items-center gap-3 animate-bounce">
-                  <BellRing className="w-5 h-5 text-emerald-600 animate-swing" />
+                <div className="p-4 bg-emerald-50 border border-emerald-100 rounded-xl flex items-center gap-3 animate-bounce">
+                  <BellRing className="w-5 h-5 text-emerald-600" />
                   <div>
                     <h4 className="text-xs font-extrabold text-emerald-800">¡Su vehículo está Listo para Entrega!</h4>
                     <p className="text-[11px] text-emerald-700 font-medium mt-0.5">El servicio y pruebas de control de calidad han finalizado con éxito. Ya puede acudir a ventanilla por él.</p>
@@ -210,10 +225,12 @@ export default function ClienteView({ orders, onUpdateOrder, onSendToast }: Clie
                 </div>
               )}
             </div>
+          )}
 
-            {/* 2. Budget Approval breakdown */}
-            <div className="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm">
-              <div className="flex flex-col md:flex-row md:items-center justify-between border-b border-slate-100 pb-3 mb-5 gap-3">
+          {/* 2. Budget Approval breakdown Tab */}
+          {activeSubTab === 'budget' && (
+            <div className="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm flex flex-col gap-5">
+              <div className="flex flex-col md:flex-row md:items-center justify-between border-b border-slate-100 pb-3 gap-3">
                 <div className="flex items-center gap-2">
                   <FileText className="w-5 h-5 text-rose-500" />
                   <div>
@@ -236,8 +253,8 @@ export default function ClienteView({ orders, onUpdateOrder, onSendToast }: Clie
 
               {selectedOrder.budget.items.length > 0 ? (
                 <div className="flex flex-col gap-5">
-                  <div className="border border-slate-200 rounded-xl overflow-hidden bg-white shadow-sm">
-                    <table className="w-full text-left text-xs">
+                  <div className="border border-slate-200 rounded-xl overflow-hidden bg-white shadow-sm overflow-x-auto">
+                    <table className="w-full text-left text-xs min-w-[500px]">
                       <thead>
                         <tr className="bg-slate-50 text-slate-500 font-bold border-b border-slate-100 text-[10px]">
                           <th className="py-3 px-4">Concepto</th>
@@ -323,31 +340,21 @@ export default function ClienteView({ orders, onUpdateOrder, onSendToast }: Clie
                   </div>
                 </div>
               ) : (
-                <div className="text-center p-8 text-slate-400 text-xs">
+                <div className="text-center p-8 text-slate-400 text-xs bg-slate-50 rounded-xl">
                   Su auto está en fase de diagnóstico inicial. Próximamente el asesor cargará un presupuesto para su revisión.
                 </div>
               )}
             </div>
-          </div>
+          )}
 
-          {/* Verification Calendar and Evidence Carousel */}
-          <div className="flex flex-col gap-6">
-            
-            {/* CDMX Verification Schedule Widget */}
-            <VerificationCDMX 
-              plate={selectedOrder.plate} 
-              onSendAlert={(msg) => {
-                onSendToast(msg);
-              }} 
-            />
-
-            {/* Evidences Carousel / Sections */}
-            <div className="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm">
-              <div className="flex items-center gap-2 border-b border-slate-100 pb-3 mb-4">
+          {/* 3. Evidences Gallery Tab */}
+          {activeSubTab === 'evidence' && (
+            <div className="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm flex flex-col gap-5">
+              <div className="flex items-center gap-2 border-b border-slate-100 pb-3">
                 <Camera className="w-5 h-5 text-rose-500" />
                 <div>
-                  <h3 className="text-xs font-extrabold uppercase tracking-wider text-slate-500">Galería de Evidencias</h3>
-                  <p className="text-[10px] text-slate-400 font-medium">Inspección transparente de reparaciones</p>
+                  <h3 className="text-sm font-extrabold text-slate-800">Galería de Evidencias de Servicio</h3>
+                  <p className="text-xs text-slate-400 font-medium">Inspección transparente de reparaciones en tiempo real</p>
                 </div>
               </div>
 
@@ -356,12 +363,12 @@ export default function ClienteView({ orders, onUpdateOrder, onSendToast }: Clie
                 <div>
                   <span className="text-[10px] font-black text-slate-400 uppercase tracking-wider block mb-2">📸 Inventario Inicial (Asesor):</span>
                   {selectedOrder.evidences.filter(e => e.type === 'RECEPCION').length > 0 ? (
-                    <div className="grid grid-cols-2 gap-2">
+                    <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
                       {selectedOrder.evidences.filter(e => e.type === 'RECEPCION').map(ev => (
-                        <div key={ev.id} className="relative rounded-lg overflow-hidden h-20 border border-slate-200 group bg-slate-50">
+                        <div key={ev.id} className="relative rounded-lg overflow-hidden h-28 border border-slate-200 group bg-slate-50 shadow-sm">
                           <img src={ev.url} alt="recep" className="w-full h-full object-cover" referrerPolicy="no-referrer" />
-                          <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity p-1.5 flex items-end">
-                            <p className="text-[9px] text-white leading-normal line-clamp-2">{ev.description}</p>
+                          <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity p-2.5 flex items-end">
+                            <p className="text-[10px] text-white leading-normal line-clamp-2">{ev.description}</p>
                           </div>
                         </div>
                       ))}
@@ -375,12 +382,12 @@ export default function ClienteView({ orders, onUpdateOrder, onSendToast }: Clie
                 <div className="border-t border-slate-100 pt-3">
                   <span className="text-[10px] font-black text-rose-500 uppercase tracking-wider block mb-2">🚨 Hallazgos y Desgaste (Mecánico):</span>
                   {selectedOrder.evidences.filter(e => e.type === 'DIAGNOSTICO').length > 0 ? (
-                    <div className="grid grid-cols-2 gap-2">
+                    <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
                       {selectedOrder.evidences.filter(e => e.type === 'DIAGNOSTICO').map(ev => (
-                        <div key={ev.id} className="relative rounded-lg overflow-hidden h-20 border border-slate-200 group bg-slate-50">
+                        <div key={ev.id} className="relative rounded-lg overflow-hidden h-28 border border-slate-200 group bg-slate-50 shadow-sm">
                           <img src={ev.url} alt="diag" className="w-full h-full object-cover" referrerPolicy="no-referrer" />
-                          <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity p-1.5 flex items-end">
-                            <p className="text-[9px] text-white leading-normal line-clamp-2">{ev.description}</p>
+                          <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity p-2.5 flex items-end">
+                            <p className="text-[10px] text-white leading-normal line-clamp-2">{ev.description}</p>
                           </div>
                         </div>
                       ))}
@@ -394,12 +401,12 @@ export default function ClienteView({ orders, onUpdateOrder, onSendToast }: Clie
                 <div className="border-t border-slate-100 pt-3">
                   <span className="text-[10px] font-black text-emerald-600 uppercase tracking-wider block mb-2">🔧 Trabajo Finalizado (Mecánico):</span>
                   {selectedOrder.evidences.filter(e => e.type === 'REPARACION').length > 0 ? (
-                    <div className="grid grid-cols-2 gap-2">
+                    <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
                       {selectedOrder.evidences.filter(e => e.type === 'REPARACION').map(ev => (
-                        <div key={ev.id} className="relative rounded-lg overflow-hidden h-20 border border-slate-200 group bg-slate-50">
+                        <div key={ev.id} className="relative rounded-lg overflow-hidden h-28 border border-slate-200 group bg-slate-50 shadow-sm">
                           <img src={ev.url} alt="rep" className="w-full h-full object-cover" referrerPolicy="no-referrer" />
-                          <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity p-1.5 flex items-end">
-                            <p className="text-[9px] text-white leading-normal line-clamp-2">{ev.description}</p>
+                          <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity p-2.5 flex items-end">
+                            <p className="text-[10px] text-white leading-normal line-clamp-2">{ev.description}</p>
                           </div>
                         </div>
                       ))}
@@ -410,8 +417,19 @@ export default function ClienteView({ orders, onUpdateOrder, onSendToast }: Clie
                 </div>
               </div>
             </div>
+          )}
 
-          </div>
+          {/* 4. CDMX Verification Schedule widget Tab */}
+          {activeSubTab === 'cdmx' && (
+            <div className="max-w-xl mx-auto w-full">
+              <VerificationCDMX 
+                plate={selectedOrder.plate} 
+                onSendAlert={(msg) => {
+                  onSendToast(msg);
+                }} 
+              />
+            </div>
+          )}
 
         </div>
       ) : (

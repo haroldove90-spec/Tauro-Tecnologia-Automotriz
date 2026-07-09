@@ -13,10 +13,28 @@ interface AsesorViewProps {
   onAddOrder: (newOrder: ServiceOrder) => void;
   onUpdateOrder: (updatedOrder: ServiceOrder) => void;
   onSendToast: (msg: string) => void;
+  activeSubTab?: 'checkin' | 'quotes' | 'monitor';
+  onChangeSubTab?: (tab: 'checkin' | 'quotes' | 'monitor') => void;
 }
 
-export default function AsesorView({ orders, onAddOrder, onUpdateOrder, onSendToast }: AsesorViewProps) {
-  const [activeSubTab, setActiveSubTab] = useState<'checkin' | 'quotes' | 'monitor'>('checkin');
+export default function AsesorView({ 
+  orders, 
+  onAddOrder, 
+  onUpdateOrder, 
+  onSendToast,
+  activeSubTab: externalActiveSubTab,
+  onChangeSubTab: externalOnChangeSubTab
+}: AsesorViewProps) {
+  const [internalActiveSubTab, setInternalActiveSubTab] = useState<'checkin' | 'quotes' | 'monitor'>('checkin');
+  
+  const activeSubTab = externalActiveSubTab !== undefined ? externalActiveSubTab : internalActiveSubTab;
+  const setActiveSubTab = (tab: 'checkin' | 'quotes' | 'monitor') => {
+    if (externalOnChangeSubTab) {
+      externalOnChangeSubTab(tab);
+    } else {
+      setInternalActiveSubTab(tab);
+    }
+  };
   
   // Search state
   const [searchTerm, setSearchTerm] = useState('');
